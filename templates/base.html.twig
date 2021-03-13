@@ -1,11 +1,94 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}{% endblock %}</title>
-    </head>
+<html lang="fr">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="author" content="Benjamin Roche" />
+    <meta name="description" content="Bienvenue sur le site communautaire snowtricks. Inscrivez votre figure dès maintenant !">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Snowtricks - {% block title %}{% endblock %}</title>
 
-    <body>
-        {% block body %}{% endblock %}
-    </body>
+    <!-- jQuery Files -->
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
+    <!-- Parallax File -->
+    <script type="text/javascript" src="{{ asset('js/parallax.min.js') }}"></script>
+
+    <!-- Stylesheets -->
+    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/ionicons.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/pe-icon-7-stroke.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/magnific-popup.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/logoiconfont.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet" title="main-css">
+</head>
+
+<body data-spy="scroll" data-target=".navbar" data-offset="70">
+
+<!-- Begin Header -->
+<header>
+    <!-- Begin Navigation -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="row">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand scroll-link" href="/"><span><img src="{{ asset('img/logo.png') }}" height="40" alt="logo"></span></a>
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="#home" data-id="home" class="scroll-link">Accueil</a></li>
+                        <li><a href="#figures" data-id="home" class="scroll-link">Figures</a></li>
+                        <li><a href="/blog">Connexion</a></li>
+                        <li><a href="/register">Inscription</a></li>
+                    </ul>
+                </div><!-- /.navbar-collapse -->
+            </div>
+        </div><!-- /.container-fluid -->
+    </nav>
+    <!-- End Navigation -->
+</header>
+<!-- End Header -->
+
+<!-- Begin Body -->
+{% block body %}
+{% endblock %}
+<!-- End Body -->
+
+<!-- Begin Footer -->
+<footer class="footer-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-8 col-sm-offset-2 text-center">
+                <span class="logo"><img src="{{ asset('img/logo.png') }}" height="50" alt="logo"></span>
+                <h2 class="theme-title"><span class="theme-title-smaller">Snowtricks</span></h2>
+                <a href="#"><span class="ion-social-twitter social-icons-dark-hover mr15"></span></a>
+                <a href="#"><span class="ion-social-facebook social-icons-dark-hover mr15"></span></a>
+                <a href="#"><span class="ion-social-googleplus-outline social-icons-dark-hover"></span></a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-8 col-sm-offset-2 text-small text-center">
+                <p class="mt10">&copy;2021 Snowtricks</p>
+            </div><!-- /.column -->
+        </div><!-- /.row -->
+    </div><!-- /.container -->
+</footer><!-- /.footer -->
+<!-- Begin Footer -->
+
+<!-- Javascript Files -->
+<script type="text/javascript" src="{{ asset('js/bootstrap.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/jquery.mixitup.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/jquery.inview.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/jquery.magnific-popup.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/scrollreveal.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/main.js') }}"></script>
+</body>
 </html>

@@ -1,0 +1,26 @@
+{% extends'base.html.twig' %}
+
+{% block title %}Le site communautaire !{% endblock %}
+
+{% block body %}
+
+    <!-- Begin Jumbotron -->
+    <div class="jumbotron jumbotron-main" id="home" style="background-image:url({{ asset('img/cover.jpg') }});background-size:cover;">
+        <div class="container center-vertically-holder">
+            <div class="center-vertically">
+                <div class="col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center">
+                    <h1 class="scaleReveal">
+                        Bienvenue sur <strong>Snowtricks</strong>.
+                    </h1>
+                    <a href="#ideology" data-id="ideology" class="scroll-link">
+                        <div class="scroll-indicator rotateBottomReveal">
+                            <span class="ion-android-arrow-down arrow-scroll-indicator"></span>
+                        </div>
+                    </a>
+                </div><!-- /.column -->
+            </div><!-- /.vertical center -->
+        </div><!-- /.container -->
+    </div>
+    <!-- End Jumbotron -->
+
+{% endblock %}
