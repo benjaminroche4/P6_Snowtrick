@@ -32,10 +32,10 @@
                 <div class="col-sm-3 mt30-xs">
                     <!-- Thumbnail Content -->
                     <div class="thumbnail">
-                        <img src="{{ trick.MainPhotoUrl }}" alt="Figure de snow">
+                        <img src="{{ trick.MainPhotoUrl }}" class="img-size" alt="Figure de snow">
                         <div class="caption">
                             <h3 class="mb15">{{ trick.title }}</h3>
-                            <p class="text-small mb20">{{ trick.content }}</p>
+                            <p class="text-small mb20">{{ trick.content | slice(0, 100) }}..</p>
                             <p class="no-margin"><a class="btn btn-primary" href="{{ path("trick_show", {title: trick.title })}}" role="button">Voir plus</a></p>
                         </div>
                     </div>

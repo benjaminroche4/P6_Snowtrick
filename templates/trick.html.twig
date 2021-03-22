@@ -1,11 +1,94 @@
 {% extends'base.html.twig' %}
 
-{% block title %}Le site communautaire !{% endblock %}
+{% block title %}{{ trick.title }}{% endblock %}
 
 {% block body %}
 
-    <h1>{{ trick.title }}</h1>
-    <p>{{ trick.content }}</p>
+    <!-- Begin Jumbotron -->
+    <div class="jumbotron jumbotron-main" id="figure-name" style="background-image:url({{trick.MainPhotoUrl}});background-size:cover;">
+        <div class="container center-vertically-holder">
+            <div class="center-vertically">
+                <div class="col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center">
+                    <h1 class="scaleReveal">
+                        {{ trick.title }}
+                    </h1>
+                </div><!-- /.column -->
+            </div><!-- /.vertical center -->
+        </div><!-- /.container -->
+    </div>
+    <!-- End Jumbotron -->
 
+    <!-- Begin Infos -->
+    <section id="infos" class="background1 section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 text-center">
+                    <p class="text-justify">{{ trick.content }}</p>
+                    <span class="text-center section-divider"></span>
+                    <p class="no-margin">
+                        <span class="label label-default">Publié le {{ trick.CreatedAt | date('d/m/Y') }}</span>
+                        <span class="label label-primary">{{ trick.Groupe.name }}</span>
+                    </p>
+                </div><!-- /.column -->
+            </div><!-- /.row -->
+        </div>
+    </section>
+    <!-- End Infos-->
+
+    <!-- Begin Comment Form -->
+    <section id="contact" class="background2 section-padding">
+        <div class="container">
+            <div class="row mb30">
+                <div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3 section-title text-center">
+                    <h4>Poster un commentaire</h4>
+                    <span class="section-divider mb15"></span>
+                </div><!-- /.column -->
+            </div><!-- /.row -->
+            <div class="row">
+                <div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
+                    <form id="commentForm" name="commentForm">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <div class="controls">
+                                        <textarea class="form-control" id="message" placeholder="Message *" required="" rows="5"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt15">
+                            <div class="col-sm-6">
+                                <div id="msgSubmit" class="h4 hidden mt10 no-margin-bottom"></div>
+                            </div><!-- /.column -->
+                            <div class="col-sm-6 text-right">
+                                <button type="submit" id="submit" class="btn btn-default btn-lg">Poster</button>
+                            </div><!-- /.column -->
+                        </div><!-- /.row -->
+                    </form><!-- /.form -->
+                </div><!-- /.column -->
+            </div><!-- /.row -->
+        </div><!-- /.container -->
+    </section><!-- /.section -->
+    <!-- End Comment Form -->
+
+    <!-- Begin Comments -->
+    <section id="comments" class="background1 section-padding">
+        <div class="container">
+            <div class="row mb30">
+                <div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3 section-title text-center">
+                    <h4>Commentaires</h4>
+                    <span class="section-divider mb15"></span>
+                </div><!-- /.column -->
+            </div><!-- /.row -->
+            <div class="row">
+                <div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
+                    <h5 class="heading-1 mb20">Benjamin</h5>
+                    <p class="text-justify">Super figure, mais difficile à réaliser.</p>
+                    <p class="comment-date mt15">Publié le 19/01/2021 à 14h01</p>
+                </div><!-- /.column -->
+            </div><!-- /.row -->
+        </div><!-- /.container -->
+    </section><!-- /.section -->
+    <!-- End Comments -->
 
 {% endblock %}
