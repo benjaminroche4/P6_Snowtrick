@@ -13,7 +13,7 @@
                         Bienvenue sur <strong>Snowtricks</strong>.
                     </h1>
                     <p class="bottomReveal">Le site qui référencie les meilleures figures en snowboard.</p>
-                    <a href="#ideology" data-id="ideology" class="scroll-link">
+                    <a href="#figures" data-id="figures" class="scroll-link">
                         <div class="scroll-indicator rotateBottomReveal">
                             <span class="ion-android-arrow-down arrow-scroll-indicator"></span>
                         </div>
@@ -28,18 +28,19 @@
     <section id="figures" class="background1 section-padding">
         <div class="container">
             <div class="row">
+                {% for trick in tricks %}
                 <div class="col-sm-3 mt30-xs">
                     <!-- Thumbnail Content -->
-                    <div class="thumbnail no-margin">
-                        <img src="" alt="Figure de snow">
+                    <div class="thumbnail">
+                        <img src="{{ trick.MainPhotoUrl }}" alt="Figure de snow">
                         <div class="caption">
-                            <h3 class="mb15">Thumbnail label</h3>
-                            <p class="text-small mb20">Cras justo odio, dapibus ac facilisis in, egestas eget quam.
-                                Donec id elit non mi porta gravida at eget metus.</p>
-                            <p class="no-margin"><a class="btn btn-primary" href="#" role="button">Voir la figure</a></p>
+                            <h3 class="mb15">{{ trick.title }}</h3>
+                            <p class="text-small mb20">{{ trick.content }}</p>
+                            <p class="no-margin"><a class="btn btn-primary" href="{{ path("trick_show", {title: trick.title })}}" role="button">Voir plus</a></p>
                         </div>
                     </div>
                 </div><!-- /.column -->
+                {% endfor %}
             </div>
         </div>
     </section>
