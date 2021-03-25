@@ -1,0 +1,12 @@
+<h1>Bienvenue sur Snowtricks !</h1>
+
+<p>
+    Merci de confirmer votre email en suivant ce lien : <br><br>
+    <a href="{{ signedUrl|raw }}">Confirm my Email</a>.
+    Ce lien expirera  {{ expiresAtMessageKey|trans(expiresAtMessageData, 'VerifyEmailBundle') }}.
+</p>
+
+<p>
+    Merci,
+    L'équipe de Snowtricks.
+</p>

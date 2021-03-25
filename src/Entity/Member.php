@@ -6,11 +6,15 @@ use App\Repository\MemberRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=MemberRepository::class)
  * @ORM\Table(name="`member`")
+ * @UniqueEntity(fields={"username"}, message="Ce pseudo existe déjà. Choisissez en un autre.")
+ * @UniqueEntity(fields={"email"}, message="Cet email est déjà associé à un compte existant.")
  */
 class Member implements UserInterface
 {
@@ -23,6 +27,8 @@ class Member implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Assert\Length(min=4, max=50, minMessage="Votre pseudo doit faire au minimum {{ limit }} caractères.",
+     * maxMessage="Votre pseudo est trop long")
      */
     private $username;
 
@@ -38,7 +44,8 @@ class Member implements UserInterface
     private $password;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, unique=true)
+     * @Assert\Email(message = "Votre email n'est pas valide.")
      */
     private $email;
 
@@ -61,6 +68,11 @@ class Member implements UserInterface
      * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="memberCreator")
      */
     private $comments;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isVerified = false;
 
     public function __construct()
     {
@@ -239,4 +251,23 @@ class Member implements UserInterface
 
         return $this;
     }
+
+    public function isVerified(): bool
+    {
+        return $this->isVerified;
+    }
+
+    public function setIsVerified(bool $isVerified): self
+    {
+        $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->username;
+    }
+
+
 }

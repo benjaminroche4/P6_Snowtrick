@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription réussie{% endblock %}
+
+{% block body %}
+
+    <!-- Begin Register Success -->
+    <div class="jumbotron jumbotron-main" style="background-image:url({{ asset('img/register-background.jpg') }});background-size:cover;">
+        <div class="container center-vertically-holder">
+            <div class="center-vertically">
+                <div class="col-sm-6 col-lg-6 col-sm-offset-3 col-lg-offset-3 mt40-xs">
+                    <div id="register_form" class="register-form mb40-xs">
+                        <h3 class="no-margin-top mb20">Félicitation !</h3>
+                        <span class="text-success text-small">{{ msg }}</span>
+                    </div>
+                </div><!-- /.column -->
+            </div><!-- /.vertical center -->
+        </div><!-- /.container -->
+    </div>
+    <!-- End Register Success -->
+
+{% endblock %}

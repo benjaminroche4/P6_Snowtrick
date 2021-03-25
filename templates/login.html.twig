@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion{% endblock %}
+
+{% block body %}
+
+    <!-- Begin Login -->
+    <div class="jumbotron jumbotron-main" style="background-image:url({{ asset('img/login-background.jpg') }});background-size:cover;">
+        <div class="container center-vertically-holder">
+            <div class="center-vertically">
+                <div class="col-sm-6 col-lg-6 col-sm-offset-3 col-lg-offset-3 mt40-xs">
+                    <form role="form" id="register_form" class="register-form mb40-xs">
+                        <h3 class="no-margin-top mb20">Connectez-vous</h3>
+                        <div class="form-group">
+                            <input type="text" name="username" class="form-control" placeholder="Pseudo" required="required">
+                        </div>
+                        <div class="form-group">
+                            <input type="text" name="password" class="form-control" placeholder="Mot de passe" required="required">
+                        </div>
+                        <p class="text-xs-small forgot-password mb5"><a href="/forgotpassword">Mot de passe oublié ?</a></p>
+                        <p class="text-xs-small forgot-password mb5"><a href="/register">Pas encore de compte ?</a></p>
+                        <div class="form-group no-margin-bottom mt20">
+                            <button type="submit" class="btn btn-primary">Connexion</button>
+                        </div>
+                    </form>
+                </div><!-- /.column -->
+            </div><!-- /.vertical center -->
+        </div><!-- /.container -->
+    </div>
+    <!-- End Login -->
+
+
+
+{% endblock %}

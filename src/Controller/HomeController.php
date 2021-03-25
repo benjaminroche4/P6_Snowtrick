@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Comment;
 use App\Entity\Trick;
 use App\Repository\TrickRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -29,12 +30,15 @@ class HomeController extends AbstractController
      * @param Trick $trick
      * @return Response
      */
-    public function show(Trick $trick):Response{
+    public function show(Trick $trick, TrickRepository $trickRepository, $title):Response{
+
+
+        $comments = $trickRepository->findOneByTitle($title)->getComments();
+
         return $this->render('trick.html.twig', [
-            'trick' => $trick
+            'trick' => $trick,
+            'comments' => $comments
         ]);
     }
-
-
 
 }
