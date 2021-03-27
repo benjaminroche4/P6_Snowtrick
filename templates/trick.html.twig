@@ -10,7 +10,7 @@
             <div class="center-vertically">
                 <div class="col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center">
                     <h1 class="scaleReveal">
-                        {{ trick.title }}
+                        <strong>{{ trick.title }}</strong>
                     </h1>
                 </div><!-- /.column -->
             </div><!-- /.vertical center -->
@@ -46,25 +46,34 @@
             </div><!-- /.row -->
             <div class="row">
                 <div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
-                    <form id="commentForm" name="commentForm">
+                    {% if not app.user %}
                         <div class="row">
                             <div class="col-sm-12">
-                                <div class="form-group">
-                                    <div class="controls">
-                                        <textarea class="form-control" id="message" placeholder="Écrivez votre commentairei ici.." required="" rows="5"></textarea>
+                                <p class="text-center"><a href="login">Connectez-vous</a> pour pouvoir commenter un trick.</p>
+                            </div>
+                        </div>
+                    {% else %}
+                        {{ form_start(form, {"attr": {"id": "commentForm"}}) }}
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <span class="text-danger text-small">{{ form_errors(form.comment) }}</span>
+                                        <div class="controls">
+                                            {{ form_widget(form.comment, {"attr": {'class': 'form-control', 'placeholder': 'Écrivez votre commentairei ici..', 'rows': "5", 'id' : 'message'} })}}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row mt15">
-                            <div class="col-sm-6">
-                                <div id="msgSubmit" class="h4 hidden mt10 no-margin-bottom"></div>
-                            </div><!-- /.column -->
-                            <div class="col-sm-6 text-right">
-                                <button type="submit" id="submit" class="btn btn-default btn-lg">Poster</button>
-                            </div><!-- /.column -->
-                        </div><!-- /.row -->
-                    </form><!-- /.form -->
+                            <div class="row mt15">
+                                <div class="col-sm-6">
+                                    <div id="msgSubmit" class="h4 hidden mt10 no-margin-bottom"></div>
+                                </div><!-- /.column -->
+                                <div class="col-sm-6 text-right">
+                                    <button type="submit" id="submit" class="btn btn-default btn-lg">Poster</button>
+                                </div><!-- /.column -->
+                            </div><!-- /.row -->
+                        {{ form_end(form) }}
+                    {% endif %}
                 </div><!-- /.column -->
             </div><!-- /.row -->
         </div><!-- /.container -->
@@ -84,8 +93,8 @@
                 {% for comment in comments %}
                 <div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
                     <span><img src='{{ comment.memberCreator.urlAvatar}}' alt="avatar" class="avatar-style"></span><h5 class="heading-1 mb20">{{ comment.memberCreator }}</h5>
-                    <p class="text-justify">{{ comment.Comment }}</p>
-                    <p class="comment-date mt15 mb20">Publié le {{ trick.CreatedAt | date('d/m/Y') }} à {{ trick.CreatedAt | date('H:i') }}</p>
+                    <p class="text-justify">{{ comment.comment }}</p>
+                    <p class="comment-date mt15 mb20">Publié le {{ comment.createdAt | date('d/m/Y') }} à {{ comment.createdAt | date('H:i') }}</p>
                 </div><!-- /.column -->
                 {% else %}
                     <p class="text-center">Soyez le premier à écrire un commentaire pour ce trick !</p>

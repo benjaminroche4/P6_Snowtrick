@@ -3,20 +3,31 @@
 {% block title %}Connexion{% endblock %}
 
 {% block body %}
-
     <!-- Begin Login -->
     <div class="jumbotron jumbotron-main" style="background-image:url({{ asset('img/login-background.jpg') }});background-size:cover;">
         <div class="container center-vertically-holder">
             <div class="center-vertically">
                 <div class="col-sm-6 col-lg-6 col-sm-offset-3 col-lg-offset-3 mt40-xs">
-                    <form role="form" id="register_form" class="register-form mb40-xs">
+                    <form method="post" role="form" id="register_form" class="register-form mb40-xs">
                         <h3 class="no-margin-top mb20">Connectez-vous</h3>
+                        {% if error %}
+                            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                        {% endif %}
+
+                        {% if app.user %}
+                            <div class="mb-3">
+                                You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
+                            </div>
+                        {% endif %}
                         <div class="form-group">
-                            <input type="text" name="username" class="form-control" placeholder="Pseudo" required="required">
+                            <input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="form-control" placeholder="Pseudo" required="required">
                         </div>
                         <div class="form-group">
-                            <input type="text" name="password" class="form-control" placeholder="Mot de passe" required="required">
+                            <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Mot de passe" required="required">
                         </div>
+                        <input type="hidden" name="_csrf_token"
+                               value="{{ csrf_token('authenticate') }}"
+                        >
                         <p class="text-xs-small forgot-password mb5"><a href="/forgotpassword">Mot de passe oublié ?</a></p>
                         <p class="text-xs-small forgot-password mb5"><a href="/register">Pas encore de compte ?</a></p>
                         <div class="form-group no-margin-bottom mt20">
@@ -28,7 +39,5 @@
         </div><!-- /.container -->
     </div>
     <!-- End Login -->
-
-
 
 {% endblock %}

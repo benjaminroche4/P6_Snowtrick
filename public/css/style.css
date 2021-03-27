@@ -42,6 +42,38 @@ Author:Denis Samardjiev
 
 /* =Custom Styles
 -------------------------------------------------------------- */
+.ion-style{
+    background: #222222;
+    padding-right: 10px;
+    padding-left: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+}
+
+.ion-style-up{
+    background: #615FDD;
+    padding-right: 10px;
+    padding-left: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+}
+
+#myBtn {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 99;
+    font-size: 18px;
+    color: white;
+    cursor: pointer;
+}
 
 .forgot-password a {
     color: #8980fe !important;
@@ -50,7 +82,7 @@ Author:Denis Samardjiev
 }
 
 img.img-size {
-    width: 250px !important;
+    width: 100%;
     height: 150px !important;
 }
 
@@ -64,6 +96,11 @@ img.avatar-style{
     border-radius: 30px !important;
     margin-right: 10px !important;
 }
+
+a.align-item{
+    float: right !important;
+}
+
 /* =Common Styles
 -------------------------------------------------------------- */
 body {
@@ -222,6 +259,7 @@ button:hover,
 .ml30 { margin-left: 30px }
 .mr30 { margin-right: 30px }
 .ml15 { margin-left: 15px }
+.ml10 { margin-left: 10px }
 .mr15 { margin-right: 15px }
 .pl30 { padding-left: 30px }
 .pr30 { padding-right: 30px }
@@ -573,7 +611,7 @@ button:hover,
 /* =Alerts
 -------------------------------------------------------------- */
 .alert{
-    border-radius: 45px;
+    border-radius: 1px;
     padding: 15px 15px 15px 18px;
     margin-bottom: 15px;
 }
@@ -582,6 +620,7 @@ button:hover,
     color: #FFFFFF;
     background-color: #5CB85C;
     border-color: #5CB85C;
+    opacity: 0.96;
 }
 
 .alert-info {

@@ -3,6 +3,7 @@
 {% block title %}Le site communautaire !{% endblock %}
 
 {% block body %}
+    <button onclick="topFunction()" id="myBtn" title="Go to top"><span class="ion-style-up ion-android-arrow-up"></span></button>
 
     <!-- Begin Jumbotron -->
     <div class="jumbotron jumbotron-main" id="home" style="background-image:url({{ asset('img/cover.jpg') }});background-size:cover;">
@@ -10,23 +11,28 @@
             <div class="center-vertically">
                 <div class="col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center">
                     <h1 class="scaleReveal">
-                        Bienvenue sur <strong>Snowtricks</strong>.
+                        Bienvenue {% if app.user %}{{ app.user.username }}{% endif%} sur <strong>Snowtricks</strong>.
                     </h1>
                     <p class="bottomReveal">Le site qui référencie les meilleures figures en snowboard.</p>
-                    <a href="#figures" data-id="figures" class="scroll-link">
-                        <div class="scroll-indicator rotateBottomReveal">
-                            <span class="ion-android-arrow-down arrow-scroll-indicator"></span>
-                        </div>
-                    </a>
                 </div><!-- /.column -->
             </div><!-- /.vertical center -->
         </div><!-- /.container -->
+        <a href="#figures" data-id="figures" class="scroll-link">
+            <div class="scroll-indicator rotateBottomReveal">
+                <span class="ion-style ion-android-arrow-down"></span>
+            </div>
+        </a>
     </div>
     <!-- End Jumbotron -->
 
     <!-- Begin Tricks -->
     <section id="figures" class="background1 section-padding">
         <div class="container">
+            {% if app.user %}
+                <div class="alert alert-success alert-dismissible mb50 text-center" role="alert">
+                    <strong>Vous êtes à présent connecté !</strong> Vous pouvez maintenant créer, modifier, supprimer et commenter une figure.
+                </div>
+            {% endif%}
             <div class="row">
                 {% for trick in tricks %}
                 <div class="col-sm-3 mt30-xs">
@@ -36,7 +42,12 @@
                         <div class="caption">
                             <h3 class="mb15">{{ trick.title }}</h3>
                             <p class="text-small mb20">{{ trick.content | slice(0, 100) }}..</p>
-                            <p class="no-margin"><a class="btn btn-primary" href="{{ path("trick_show", {title: trick.title })}}" role="button">Voir plus</a></p>
+                            <p class="no-margin"><a class="btn btn-primary" href="{{ path("trick_show", {title: trick.title })}}" role="button">Voir plus</a>
+                                {% if app.user %}
+                                    <a class="align-item" href="#"><span class="ml10 pe-7s-trash"></span></a>
+                                    <a class="align-item" href="#"><span class="pe-7s-pen"></span></a>
+                                {% endif %}
+                            </p>
                         </div>
                     </div>
                 </div><!-- /.column -->
@@ -45,5 +56,27 @@
         </div>
     </section>
     <!-- End Tricks -->
+
+    <script>
+        //Get the button
+        var mybutton = document.getElementById("myBtn");
+
+        // When the user scrolls down 20px from the top of the document, show the button
+        window.onscroll = function() {scrollFunction()};
+
+        function scrollFunction() {
+            if (document.body.scrollTop > 1400 || document.documentElement.scrollTop > 1400) {
+                mybutton.style.display = "block";
+            } else {
+                mybutton.style.display = "none";
+            }
+        }
+
+        // When the user clicks on the button, scroll to the top of the document
+        function topFunction() {
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+        }
+    </script>
 
 {% endblock %}
