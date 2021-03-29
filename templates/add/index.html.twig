@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AddController!{% endblock %}
+
+{% block body %}
+    <!-- Begin Form  -->
+    <section id="add" class="background1 section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 section-title text-center">
+                    <h2>Ajouter une figure</h2>
+                    <span class="section-divider"></span>
+                </div><!-- /.column -->
+            </div><!-- /.row -->
+            <div class="row">
+                <div class="col-lg-10 col-lg-offset-1">
+                    <h5 class="heading-1 mb20">Nom de la figure</h5>
+                    <input type="text" class="form-control" placeholder="Super figure" required="required">
+                    <h5 class="heading-1 mb20 mt20">Description de la figure</h5>
+                    <textarea class="form-control" required="required" rows="5">Décrivez la figure..</textarea>
+                    <h5 class="heading-1 mb20 mt20">Photo de couverture</h5>
+                    <input type="file" class="form-control-file" placeholder="Super figure" required="required" multiple>
+                    <h5 class="heading-1 mb20 mt20">Groupe de la figure</h5>
+                    <select id="group-select" class="form-control">
+                        <option value="">Choisissez le groupe de la figure</option>
+                        <option value="test">test</option>
+                    </select>
+                    <h5 class="heading-1 mb20 mt20">Photo(s)</h5>
+                    <h5 class="heading-1 mb20 mt20">Vidéo(s)</h5>
+                </div><!-- column -->
+            </div><!-- /.row -->
+        </div><!-- /.container -->
+    </section>
+    <!-- End Form -->
+{% endblock %}
