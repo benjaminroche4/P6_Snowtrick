@@ -86,6 +86,12 @@ img.img-size {
     height: 150px !important;
 }
 
+.photo-size {
+    width: 280px !important;
+    height: 158px !important;
+    margin-bottom: 4px !important;
+}
+
 .comment-date{
     font-size: 14px;
     font-style: italic;
@@ -2086,4 +2092,16 @@ footer hr {
 	.timeline > li .timeline-image { width:170px; height:170px; margin-left:-85px; }
 	.timeline > li .timeline-image h4 { margin-top:40px; }
 	.timeline > li.timeline-inverted > .timeline-panel { padding:0 30px 20px 20px; }
+}
+
+@media (max-width:734px) {
+    .desktop-section {
+        display: none;
+    }
+}
+
+@media (min-width:735px) {
+    .mobile-section {
+        display: none;
+    }
 }

@@ -22,6 +22,19 @@
     <section id="infos" class="background1 section-padding">
         <div class="container">
             <div class="row">
+                <div class="col-xs-12 text-center desktop-section mb50">
+                    {% for photo in trick.photos %}
+                        <span>
+                            <img src="{{ photo.url }}" class="photo-size">
+                        </span>
+                    {% endfor %}<br>
+                    {% for video in trick.videos %}
+                        <iframe width="280" height="158" src="{{ video.url }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    {% endfor %}
+                </div>
+                <div class="col-xs-12 text-center mobile-section mb40">
+                    <button class="btn btn-primary btn-lg">Voir les médias</button>
+                </div>
                 <div class="col-xs-12 text-center">
                     <p class="text-justify">{{ trick.content }}</p>
                     <span class="text-center section-divider"></span>
@@ -42,6 +55,12 @@
                 <div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3 section-title text-center">
                     <h4>Poster un commentaire</h4>
                     <span class="section-divider mb15"></span>
+                    {% for message in app.flashes('Notification') %}
+                        <div class="flash-notice alert alert-success alert-dismissible alert-position mt10 mb20" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span class="ion-ios-close-empty"></span></button>
+                            {{ message }}
+                        </div>
+                    {% endfor %}
                 </div><!-- /.column -->
             </div><!-- /.row -->
             <div class="row">

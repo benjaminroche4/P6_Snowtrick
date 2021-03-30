@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Comment;
 use App\Entity\Trick;
 use App\Form\CommentType;
+use App\Repository\CommentRepository;
 use App\Repository\TrickRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -33,7 +34,7 @@ class HomeController extends AbstractController
      * @param Trick $trick
      * @return Response
      */
-    public function show(Trick $trick, TrickRepository $trickRepository, $title, Request $request, EntityManagerInterface $entityManager):Response{
+    public function show(Trick $trick, CommentRepository $commentRepository, $title, Request $request, EntityManagerInterface $entityManager):Response{
 
         $dto = new Comment();
         $form = $this->createForm(CommentType::class, $dto);
@@ -45,10 +46,20 @@ class HomeController extends AbstractController
             $dto->setMemberCreator($this->getUser());
             $entityManager->persist($dto); //persist = insert
             $entityManager->flush(); //applique en base de données
+            $this->addFlash(
+                'Notification',
+                'Votre message à bien été publié !'
+            );
             return $this->redirectToRoute('trick_show', [ 'title' => $title]);
         }
 
-        $comments = $trickRepository->findOneByTitle($title)->getComments();
+        $qb = $commentRepository->createQueryBuilder('c')
+            ->join('c.trick', 't')->where('t.title = :TITLE')
+            ->orderBy('c.createdAt', 'DESC')
+            ->setParameter('TITLE', $title);
+
+
+        $comments = $qb->getQuery()->getResult();
 
         return $this->render('trick.html.twig', [
             'trick' => $trick,
