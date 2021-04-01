@@ -44,19 +44,34 @@
                             <p class="text-small mb20">{{ trick.content | slice(0, 100) }}..</p>
                             <p class="no-margin"><a class="btn btn-primary" href="{{ path("trick_show", {title: trick.title })}}" role="button">Voir plus</a>
                                 {% if app.user %}
-                                    <a class="align-item" href="#"><span class="ml10 pe-7s-trash"></span></a>
+                                    <a class="align-item" data-toggle="modal" data-target="#regularModal" href="#"><span class="ml10 pe-7s-trash"></span></a>
                                     <a class="align-item" href="#"><span class="pe-7s-pen"></span></a>
                                 {% endif %}
                             </p>
                         </div>
                     </div>
                 </div><!-- /.column -->
+
+                <!-- Begin Modal Call -->
+                    <div class="modal fade" id="regularModal" tabindex="-1" role="dialog">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <p class="text-center">Êtes vous sur de vouloir supprimer la figure "{{ trick.id }}" ?</p>
+                                    <div class="text-center"><a href="#" class="btn btn-danger btn-lg align-item-center mt30">Supprimer le trick</a></div>
+                                    <div class="text-center"><a href="#" class="btn btn-primary btn-sm mt10" class="close" data-dismiss="modal" aria-label="Close">Fermer</a></div>
+                                </div>
+                            </div><!-- /.modal-content -->
+                        </div><!-- /.modal-dialog -->
+                    </div><!-- /.modal -->
+                <!-- End Modal Call -->
                 {% endfor %}
             </div>
         </div>
     </section>
     <!-- End Tricks -->
 
+    <!-- Begin JS Button -->
     <script>
         //Get the button
         var mybutton = document.getElementById("myBtn");
@@ -78,5 +93,6 @@
             document.documentElement.scrollTop = 0;
         }
     </script>
+    <!-- End JS Button -->
 
 {% endblock %}

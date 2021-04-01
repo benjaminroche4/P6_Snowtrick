@@ -17,19 +17,6 @@ class HomeController extends AbstractController
 {
 
     /**
-     * @Route("/", name="home")
-     */
-    public function home(){
-        $repo = $this->getDoctrine()->getRepository(Trick::class);
-        $tricks = $repo->findAll();
-
-        return $this->render('home.html.twig', [
-            'controller_name' => 'HomeController',
-            'tricks' => $tricks
-        ]);
-    }
-
-    /**
      * @Route("/trick-{title}", name="trick_show")
      * @param Trick $trick
      * @return Response
@@ -65,6 +52,19 @@ class HomeController extends AbstractController
             'trick' => $trick,
             'comments' => $comments,
             'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/", name="home")
+     */
+    public function home(){
+        $repo = $this->getDoctrine()->getRepository(Trick::class);
+        $tricks = $repo->findAll();
+
+        return $this->render('home.html.twig', [
+            'controller_name' => 'HomeController',
+            'tricks' => $tricks
         ]);
     }
 
