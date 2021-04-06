@@ -5,7 +5,7 @@
 {% block body %}
 
     <!-- Begin Jumbotron -->
-    <div class="jumbotron jumbotron-main" id="figure-name" style="background-image:url({{trick.MainPhotoUrl}});background-size:cover;">
+    <div class="jumbotron jumbotron-main" id="figure-name" style="background-image:url({{ asset('/img/upload/'~trick.MainPhotoUrl) }});background-size:cover;">
         <div class="container center-vertically-holder">
             <div class="center-vertically">
                 <div class="col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center">

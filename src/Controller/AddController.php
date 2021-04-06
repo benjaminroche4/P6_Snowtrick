@@ -12,6 +12,23 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AddController extends AbstractController
 {
+
+    /**
+     * @Route("/upload-photo", name="upload-photo")
+     */
+    public function uploadPhoto(Request $request){
+
+        // Partie upload des photos
+        $filename = uniqid().'.jpg';
+        move_uploaded_file($_FILES['file']['tmp_name'], 'img/upload/'.$filename);
+
+        // + le nom du fichier en session
+        $request->getSession()>get;
+
+        return $this->json('ok');
+
+    }
+
     /**
      * @Route("/add", name="add")
      */

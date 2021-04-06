@@ -2,6 +2,14 @@
 
 {% block title %}Ajouter une figure{% endblock %}
 
+{% block stylesheets %}
+    <link href="{{ asset('dropzone/min/dropzone.min.css') }}" rel="stylesheet">
+{% endblock %}
+
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('dropzone/min/dropzone.min.js') }}"></script>
+{% endblock %}
+
 {% block body %}
     <!-- Begin Form  -->
     <section id="add" class="background1 section-padding">
@@ -33,6 +41,11 @@
                     </div>
                     <button type="submit"class="btn btn-primary">Publier la figure</button>
                     {{ form_end(form) }}
+                    <form action="{{ path('upload-photo') }}" class="dropzone">
+                        <div class="fallback">
+                            <input name="file" type="file" multiple />
+                        </div>
+                    </form>
                 </div><!-- column -->
             </div><!-- /.row -->
         </div><!-- /.container -->
