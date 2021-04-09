@@ -42,7 +42,7 @@ class RegistrationController extends AbstractController
             );
 
             $user->setCreatedAt(new \DateTime());
-            $user->setUrlAvatar("http://placehold.it/350x350");
+            $user->setUrlAvatar("admin-avatar.jpg");
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);

@@ -25,8 +25,8 @@ class HomeController extends AbstractController
 
         $dto = new Comment();
         $form = $this->createForm(CommentType::class, $dto);
-
         $form->handleRequest($request);
+
         if($form->isSubmitted() and $form->isValid()){
             $dto->setTrick($trick);
             $dto->setCreatedAt(new \DateTime());
