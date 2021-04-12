@@ -2,8 +2,11 @@
 
 namespace App\Controller;
 
+use App\DTO\TrickDTO;
+use App\Entity\Photo;
 use App\Entity\Trick;
 use App\Form\AddType;
+use App\Form\TrickDTOType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,8 +25,10 @@ class AddController extends AbstractController
         $filename = uniqid().'.jpg';
         move_uploaded_file($_FILES['file']['tmp_name'], 'img/upload/'.$filename);
 
-        // + le nom du fichier en session
-        $request->getSession()>get;
+        // Ajout du nom de fichier en session
+        $photos = $request->getSession()->get('photos',[]);
+        $photos[]= $filename;
+        $request->getSession()->set('photos', $photos);
 
         return $this->json('ok');
 
@@ -34,12 +39,13 @@ class AddController extends AbstractController
      */
     public function index(Request $request, EntityManagerInterface $entityManager): Response
     {
-        $dto = new Trick();
-        $form = $this->createForm(AddType::class, $dto);
+        $dto = new TrickDTO();
+        $form = $this->createForm(TrickDTOType::class, $dto);
         $form->handleRequest($request); //transvase les données de la requête dans le DTO
 
 
         if($form->isSubmitted() and $form->isValid()){
+            // Persiste le trick
             $file = $form['mainPhotoUrl']->getData();
             $fileName = uniqid('photo_').'.jpg';
             $file->move('img/upload', $fileName);
@@ -48,8 +54,25 @@ class AddController extends AbstractController
             $dto->setMemberCreator($this->getUser());
             $dto->setCreatedAt(new \DateTime());
             $entityManager->persist($dto);
-            $entityManager->flush();
 
+            // Persiste les photos upload d'on le nom est en session
+            $photos = $request->getSession()->get('photos', []);
+            foreach($photos as $photo){
+                $p = new Photo();
+                //fait la relation entre les deux tables
+                $p->setTrick($dto);
+                $p->setUrl($photo);
+
+                $entityManager->persist($p);
+            }
+
+            $entityManager->flush();
+            $this->addFlash('Notification', 'Votre figure a bien été ajouté !');
+
+            // Supprime la variable de session photos
+            $request->getSession()->remove('photos');
+
+            return $this->redirectToRoute('add');
         }
 
         return $this->render('add/index.html.twig', [
