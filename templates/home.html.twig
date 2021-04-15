@@ -58,7 +58,7 @@
                             <div class="modal-content">
                                 <div class="modal-body">
                                     <p class="text-center">Êtes vous sur de vouloir supprimer la figure "{{ trick.title }}" ?</p>
-                                    <div class="text-center"><a href="#" class="btn btn-danger btn-lg align-item-center mt30">Supprimer le trick</a></div>
+                                    <div class="text-center"><a href="{{ path('trick_delete', {"id": trick.id}) }}" class="btn btn-danger btn-lg align-item-center mt30">Supprimer le trick</a></div>
                                     <div class="text-center"><a href="#" class="btn btn-primary btn-sm mt10" class="close" data-dismiss="modal" aria-label="Close">Fermer</a></div>
                                 </div>
                             </div><!-- /.modal-content -->
@@ -80,7 +80,7 @@
         window.onscroll = function() {scrollFunction()};
 
         function scrollFunction() {
-            if (document.body.scrollTop > 1400 || document.documentElement.scrollTop > 1400) {
+            if (document.body.scrollTop > 1000 || document.documentElement.scrollTop > 1000) {
                 mybutton.style.display = "block";
             } else {
                 mybutton.style.display = "none";

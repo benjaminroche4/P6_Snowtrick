@@ -1,8 +1,9 @@
 <?php
 
 
-namespace App\DTO;
 
+namespace App\DTO;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 class TrickDTO
 {

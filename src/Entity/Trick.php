@@ -53,7 +53,7 @@ class Trick
     private $memberCreator;
 
     /**
-     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="trick")
+     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="trick", cascade="remove")
      */
     private $comments;
 

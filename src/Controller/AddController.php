@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\DTO\TrickDTO;
 use App\Entity\Photo;
 use App\Entity\Trick;
+use App\Entity\Video;
 use App\Form\AddType;
 use App\Form\TrickDTOType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -45,29 +46,47 @@ class AddController extends AbstractController
 
 
         if($form->isSubmitted() and $form->isValid()){
+
+            $trick = new Trick();
+
             // Persiste le trick
             $file = $form['mainPhotoUrl']->getData();
             $fileName = uniqid('photo_').'.jpg';
             $file->move('img/upload', $fileName);
 
-            $dto->setMainPhotoUrl($fileName);
-            $dto->setMemberCreator($this->getUser());
-            $dto->setCreatedAt(new \DateTime());
-            $entityManager->persist($dto);
+            $trick->setTitle($dto->getTitle());
+            $trick->setContent($dto->getContent());
+            $trick->setGroupe($dto->getGroupe());
+            $trick->setMainPhotoUrl($fileName);
+            $trick->setMemberCreator($this->getUser());
+            $trick->setCreatedAt(new \DateTime());
+            $entityManager->persist($trick);
 
             // Persiste les photos upload d'on le nom est en session
             $photos = $request->getSession()->get('photos', []);
             foreach($photos as $photo){
                 $p = new Photo();
                 //fait la relation entre les deux tables
-                $p->setTrick($dto);
+                $p->setTrick($trick);
                 $p->setUrl($photo);
 
                 $entityManager->persist($p);
             }
 
+            //Persiste les vidéos
+            $strVideo = $dto->getVideoUrls();
+            $videos = explode(',', $strVideo);
+            foreach($videos as $video){
+                $v = new Video();
+                //fait la relation entre les deux tables
+                $v->setTrick($trick);
+                $v->setUrl($video);
+
+                $entityManager->persist($v);
+            }
+
             $entityManager->flush();
-            $this->addFlash('Notification', 'Votre figure a bien été ajouté !');
+            $this->addFlash('Notification', 'Votre figure a bien été publié !');
 
             // Supprime la variable de session photos
             $request->getSession()->remove('photos');

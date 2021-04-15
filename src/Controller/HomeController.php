@@ -9,12 +9,26 @@ use App\Repository\CommentRepository;
 use App\Repository\TrickRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class HomeController extends AbstractController
 {
+
+    /**
+     * @Route("/trick/{id}/delete", name="trick_delete")
+     * @param Trick $trick
+     * @return RedirectResponse
+     */
+    public function delete(Trick $trick) :RedirectResponse{
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($trick);
+        $em->flush();
+
+        return $this->redirectToRoute("home");
+    }
 
     /**
      * @Route("/trick-{title}", name="trick_show")
