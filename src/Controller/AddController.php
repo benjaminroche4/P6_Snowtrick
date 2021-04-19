@@ -32,7 +32,6 @@ class AddController extends AbstractController
         $request->getSession()->set('photos', $photos);
 
         return $this->json('ok');
-
     }
 
     /**

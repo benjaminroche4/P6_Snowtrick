@@ -109,6 +109,9 @@ a.align-item{
     float: right !important;
 }
 
+.bold{
+    font-weight: bold;
+}
 
 /* =Common Styles
 -------------------------------------------------------------- */
