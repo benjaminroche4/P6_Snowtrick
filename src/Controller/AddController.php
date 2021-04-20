@@ -8,6 +8,7 @@ use App\Entity\Trick;
 use App\Entity\Video;
 use App\Form\AddType;
 use App\Form\TrickDTOType;
+use App\Repository\TrickRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -37,9 +38,9 @@ class AddController extends AbstractController
     /**
      * @Route("/add", name="add")
      */
-    public function index(Request $request, EntityManagerInterface $entityManager): Response
+    public function index(Request $request, EntityManagerInterface $entityManager, TrickRepository $trickRepository): Response
     {
-        $dto = new TrickDTO();
+        $dto = new TrickDTO($trickRepository);
         $form = $this->createForm(TrickDTOType::class, $dto);
         $form->handleRequest($request); //transvase les données de la requête dans le DTO
 

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\DTO\ChangeAvatarDTO;
 use App\Entity\Member;
 use App\Form\ChangeAvatarType;
 use App\Form\RegistrationFormType;
@@ -48,13 +49,19 @@ class UserController extends AbstractController
      */
     public function avatar(Request $request, EntityManagerInterface $entityManager):Response{
 
-        $dto = $this->getUser();
+        $dto = new ChangeAvatarDTO();
         $form = $this->createForm(ChangeAvatarType::class, $dto);
         $form->handleRequest($request);
 
         if($form->isSubmitted() and $form->isValid()){
-            $dto->setFile($dto, $dto->getFile());
-            $entityManager->persist($dto);
+
+            // Plqce le fichier
+            $file = $form['file']->getData();
+            $fileName = uniqid('avatar_').'.jpg';
+            $file->move('img/upload/avatar', $fileName);
+
+            // Modifie le cha,p avatr du user connecte
+            $this->getUser()->setUrlAvatar($fileName);
             $entityManager->flush();
             $this->addFlash(
                 'Notification',

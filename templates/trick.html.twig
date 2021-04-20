@@ -63,6 +63,9 @@
                     <span class="text-center section-divider"></span>
                     <p class="no-margin">
                         <span class="label label-default">Publié le {{ trick.CreatedAt | date('d/m/Y') }}</span>
+                        {% if trick.updatedAt is not null %}
+                            <span class="label label-warning">Mise à jour le {{ trick.updatedAt | date('d/m/Y') }}</span>
+                        {% endif %}
                         <span class="label label-primary">{{ trick.Groupe.name }}</span>
                     </p>
                 </div><!-- /.column -->
@@ -134,7 +137,7 @@
             <div class="row">
                 {% for comment in comments %}
                 <div class="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
-                    <span><img src='{{ asset('/img/upload/'~comment.memberCreator.urlAvatar) }}' alt="avatar" class="avatar-style"></span><h5 class="heading-1 mb20">{{ comment.memberCreator }}</h5>
+                    <span><img src='{{ asset('/img/upload/avatar/'~comment.memberCreator.urlAvatar) }}' alt="avatar" class="avatar-style"></span><h5 class="heading-1 mb20">{{ comment.memberCreator }}</h5>
                     <p class="text-justify">{{ comment.comment }}</p>
                     <p class="comment-date mt15 mb20">Publié le {{ comment.createdAt | date('d/m/Y') }} à {{ comment.createdAt | date('H:i') }}</p>
                 </div><!-- /.column -->
@@ -142,6 +145,15 @@
                     <p class="text-center">Soyez le premier à écrire un commentaire pour ce trick !</p>
                 {% endfor %}
             </div><!-- /.row -->
+            <div class="row text-center">
+                <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                        {% for p in 0..nbPages %}
+                        <li class="page-item {{ p==pageActive ? 'active':'' }}"><a class="page-link" href="{{ path('trick_show', {'title':trick.title, 'page':p}) }}">{{ p+1 }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </nav>
+            </div>
         </div><!-- /.container -->
     </section><!-- /.section -->
     <!-- End Comments -->

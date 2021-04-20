@@ -219,6 +219,7 @@ button:hover,
 
 .background1 { background-color: #212121; }
 .background2 { background-color: #1d1d1d; }
+.background3 { background-color: #141414; }
 
 /* =Margin + Padding
 -------------------------------------------------------------- */
@@ -2111,3 +2112,4 @@ footer hr {
         display: none;
     }
 }
+

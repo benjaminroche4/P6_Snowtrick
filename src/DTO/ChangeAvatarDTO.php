@@ -6,7 +6,7 @@ namespace App\DTO;
 
 class ChangeAvatarDTO
 {
-private $file;
+    private $file;
 
     /**
      * @return mixed

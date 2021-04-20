@@ -16,6 +16,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class HomeController extends AbstractController
 {
+    //Constante = valeur qui ne change pas.
+    const TAILLE_PAGE = 3;
 
     /**
      * @Route("/trick/{id}/delete", name="trick_delete")
@@ -31,11 +33,11 @@ class HomeController extends AbstractController
     }
 
     /**
-     * @Route("/trick-{title}", name="trick_show")
+     * @Route("/trick-{title}/{page}", name="trick_show")
      * @param Trick $trick
      * @return Response
      */
-    public function show(Trick $trick, CommentRepository $commentRepository, $title, Request $request, EntityManagerInterface $entityManager):Response{
+    public function show(Trick $trick, CommentRepository $commentRepository, $title, Request $request, EntityManagerInterface $entityManager, $page = 0):Response{
 
         $dto = new Comment();
         $form = $this->createForm(CommentType::class, $dto);
@@ -55,17 +57,26 @@ class HomeController extends AbstractController
         }
 
         $qb = $commentRepository->createQueryBuilder('c')
+            //Jointure DoctrineQL 'c'=jointure de la table
             ->join('c.trick', 't')->where('t.title = :TITLE')
             ->orderBy('c.createdAt', 'DESC')
             ->setParameter('TITLE', $title);
 
+        $nbTotal = count( $qb->getQuery()->getResult() );
+        $nbPages = intval( $nbTotal/self::TAILLE_PAGE );
+
+        $qb
+            ->setMaxResults(self::TAILLE_PAGE)
+            ->setFirstResult($page*self::TAILLE_PAGE);
 
         $comments = $qb->getQuery()->getResult();
 
         return $this->render('trick.html.twig', [
             'trick' => $trick,
             'comments' => $comments,
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'nbPages'=> $nbPages,
+            'pageActive'=>$page
         ]);
     }
 

@@ -1,20 +1,81 @@
-{% extends 'base.html.twig' %}
+{% extends'base.html.twig' %}
 
-{% block title %}Hello UpdateTrickController!{% endblock %}
+{% block title %}{{ trick.title }}{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <!-- Begin Jumbotron -->
+    <div class="jumbotron jumbotron-main" id="figure-name" style="background-image:url({{ asset('/img/upload/'~trick.MainPhotoUrl) }});background-size:cover;">
+        <div class="container center-vertically-holder">
+            <div class="center-vertically">
+                <div class="col-sm-8 col-sm-offset-2 col-lg-6 col-lg-offset-3 text-center">
+                    <h1 class="scaleReveal text-dark">
+                        <strong>{{ trick.title }}</strong>
+                    </h1>
+                </div><!-- /.column -->
+            </div><!-- /.vertical center -->
+        </div><!-- /.container -->
+    </div>
+    <!-- End Jumbotron -->
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ '/Users/roche/Desktop/snowtricks/src/Controller/UpdateTrickController.php'|file_link(0) }}">src/Controller/UpdateTrickController.php</a></code></li>
-        <li>Your template at <code><a href="{{ '/Users/roche/Desktop/snowtricks/templates/update_trick/index.html.twig'|file_link(0) }}">templates/update_trick/index.html.twig</a></code></li>
-    </ul>
-</div>
+    <!-- Begin Infos -->
+    <section id="infos" class="background1 section-padding">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 text-center desktop-section mb20">
+                    {% for photo in trick.photos %}
+                        <span>
+                            <img src="{{ asset('/img/upload/'~photo.url) }}" class="photo-size">
+                        </span>
+                    {% endfor %}
+
+                    {% for video in trick.videos %}
+                        <iframe width="280" height="158" src="{{ video.Url }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    {% endfor %}
+                </div>
+                <div class="col-xs-12 text-center mobile-section mb20">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                                    <b>Voir les médias</b>
+                                </a>
+                            </h4>
+                        </div>
+                        <div id="collapseOne" class="panel-collapse collapse">
+                            <div class="panel-body">
+                                {% for photo in trick.photos %}
+                                    <span>
+                                        <img src="{{ asset('/img/upload/'~photo.url) }}" class="photo-size">
+                                    </span>
+                                {% endfor %}
+
+                                {% for video in trick.videos %}
+                                    <iframe width="280" height="158" src="{{ video.Url }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div><!-- /panel -->
+                </div>
+                <div class="col-xs-12 text-center">
+                    <textarea rows="5" class="form-control">{{ trick.content }}</textarea>
+                    <span class="text-center section-divider"></span>
+                    <p class="no-margin">
+                        <span class="label label-default">Publié le {{ trick.CreatedAt | date('d/m/Y') }}</span>
+                        {% if trick.updatedAt is not null %}
+                            <span class="label label-warning">Mise à jour le {{ trick.updatedAt | date('d/m/Y') }}</span>
+                        {% endif %}
+                        <span class="label label-primary">{{ trick.Groupe.name }}</span>
+                    </p>
+                </div><!-- /.column -->
+                <div class="col-xs-12 mt40 text-right">
+                    <p class="no-margin">
+                        <a href="#" class="btn btn-primary btn-lg">Mettre à jour</a>
+                        <a href="#" class="btn btn-danger btn-md">Supprimer</a>
+                    </p>
+                </div><!-- /.column -->
+            </div><!-- /.row -->
+        </div>
+    </section>
+    <!-- End Infos-->
 {% endblock %}

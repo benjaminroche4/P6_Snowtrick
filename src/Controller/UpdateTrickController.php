@@ -14,10 +14,8 @@ class UpdateTrickController extends AbstractController
      * @param Trick $trick
      * @return Response
      */
-    public function index(Trick $trick): Response
-    {
+    public function index(Trick $trick): Response{
         return $this->render('update_trick/index.html.twig', [
-            'controller_name' => 'UpdateTrickController',
             'trick' => $trick
         ]);
     }

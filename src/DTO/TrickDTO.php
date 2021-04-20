@@ -3,7 +3,10 @@
 
 
 namespace App\DTO;
+use App\Repository\TrickRepository;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints\Callback;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class TrickDTO
 {
@@ -12,6 +15,31 @@ class TrickDTO
     private $videoUrls;
     private $mainPhotoUrl;
     private $content;
+
+    /**
+     * @var TrickRepository
+     */
+    private $trickRepository;
+
+    /**
+     * TrickDTO constructor.
+     * @param TrickRepository $trickRepository
+     */
+    public function __construct(TrickRepository $trickRepository)
+    {
+        $this->trickRepository = $trickRepository;
+    }
+
+
+    /**
+     * @Callback
+     */
+    public function uniqueTitle(ExecutionContextInterface $context){
+        if( $this->trickRepository->count(['title'=>$this->title]) > 0 ){
+            $context->buildViolation('Ce trick est déjà existant.')->addViolation();
+        }
+    }
+
 
     /**
      * @return mixed

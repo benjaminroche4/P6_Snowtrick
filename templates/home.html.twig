@@ -3,6 +3,7 @@
 {% block title %}Le site communautaire !{% endblock %}
 
 {% block body %}
+
     <button onclick="topFunction()" id="myBtn" title="Go to top"><span class="ion-style-up ion-android-arrow-up"></span></button>
 
     <!-- Begin Jumbotron -->
@@ -45,7 +46,7 @@
                             <p class="no-margin"><a class="btn btn-primary" href="{{ path("trick_show", {title: trick.title })}}" role="button">Voir plus</a>
                                 {% if app.user %}
                                     <a class="align-item" data-toggle="modal" data-target="#regularModal{{ trick.id }}" href="#"><span class="ml10 pe-7s-trash"></span></a>
-                                    <a class="align-item" href="#"><span class="pe-7s-pen"></span></a>
+                                    <a class="align-item" href="{{ path("update_trick", {id: trick.id}) }}"><span class="pe-7s-pen"></span></a>
                                 {% endif %}
                             </p>
                         </div>
