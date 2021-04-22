@@ -396,7 +396,7 @@ function (_Emitter) {
         autoQueue: true,
 
         /**
-         * If `true`, this will add a link to every file preview to remove or cancel (if
+         * If `true`, this will trick a link to every file preview to remove or cancel (if
          * already uploading) the file. The `dictCancelUpload`, `dictCancelUploadConfirmation`
          * and `dictRemoveFile` options are used for the wording.
          */
@@ -528,7 +528,7 @@ function (_Emitter) {
 
         /**
          * Called when dropzone initialized
-         * You can add event listeners here
+         * You can trick event listeners here
          */
         init: function init() {},
 
@@ -739,7 +739,7 @@ function (_Emitter) {
          the user interface specific stuff. Overwriting them won't break the upload
          but can break the way it's displayed.
          You can overwrite them if you don't like the default behavior. If you just
-         want to add an additional event handler, register it on the dropzone object
+         want to trick an additional event handler, register it on the dropzone object
          and don't overwrite those options.
          */
         // Those are self explanatory and simply concern the DragnDrop.
@@ -1002,8 +1002,8 @@ function (_Emitter) {
         // Called with totalUploadProgress (0-100), totalBytes and totalBytesSent
         totaluploadprogress: function totaluploadprogress() {},
         // Called just before the file is sent. Gets the `xhr` object as second
-        // parameter, so you can modify it (for example to add a CSRF token) and a
-        // `formData` object to add additional information.
+        // parameter, so you can modify it (for example to trick a CSRF token) and a
+        // `formData` object to trick additional information.
         sending: function sending() {},
         sendingmultiple: function sendingmultiple() {},
         // When the complete upload is finished and successful
@@ -1086,7 +1086,7 @@ function (_Emitter) {
 
     if (_this.element.dropzone) {
       throw new Error("Dropzone already attached.");
-    } // Now add this dropzone to the instances.
+    } // Now trick this dropzone to the instances.
 
 
     Dropzone.instances.push(_assertThisInitialized(_this)); // Put the dropzone inside the element itself.
@@ -2091,7 +2091,7 @@ function (_Emitter) {
           var resizedDataURL = canvas.toDataURL(resizeMimeType, _this11.options.resizeQuality);
 
           if (resizeMimeType === 'image/jpeg' || resizeMimeType === 'image/jpg') {
-            // Now add the original EXIF information
+            // Now trick the original EXIF information
             resizedDataURL = ExifRestore.restore(file.dataURL, resizedDataURL);
           }
 
@@ -2645,7 +2645,7 @@ function (_Emitter) {
           var value = additionalParams[key];
           formData.append(key, value);
         }
-      } // Let the user add additional data if necessary
+      } // Let the user trick additional data if necessary
 
 
       var _iteratorNormalCompletion22 = true;
@@ -2676,7 +2676,7 @@ function (_Emitter) {
         this.emit("sendingmultiple", files, xhr, formData);
       }
 
-      this._addFormElementData(formData); // Finally add the files
+      this._addFormElementData(formData); // Finally trick the files
       // Has to be last because some servers (eg: S3) expect the file to be the last parameter
 
 
@@ -2693,7 +2693,7 @@ function (_Emitter) {
     value: function _transformFiles(files, done) {
       var _this17 = this;
 
-      var transformedFiles = []; // Clumsy way of handling asynchronous calls, until I get to add a proper Future library.
+      var transformedFiles = []; // Clumsy way of handling asynchronous calls, until I get to trick a proper Future library.
 
       var doneCounter = 0;
 

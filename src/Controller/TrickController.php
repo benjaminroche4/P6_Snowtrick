@@ -15,8 +15,37 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class AddController extends AbstractController
+class TrickController extends AbstractController
 {
+    /**
+     * @Route("/update-trick-{id}", name="update-trick")
+     * @param Trick $trick
+     * @return Response
+     */
+    public function updateTrick($id, TrickRepository $trickRepository, Request $request): Response{
+
+        $dto = new TrickDTO($trickRepository);
+        $form = $this->createForm(TrickDTOType::class, $dto); //transvase les données de la requête dans le DTO (formbinding)
+        $form->handleRequest($request);
+
+        if( ! $form->isSubmitted() ){  // GET
+
+            $trick = $trickRepository->find($id);
+            $dto->setGroupe($trick->getGroupe());
+            $dto->setContent($trick->getContent());
+            $dto->setMainPhotoUrl($trick->getMainPhotoUrl());
+            $dto->setTitle($trick->getTitle());
+
+            return $this->render('trick/update-trick.html.twig', [
+                'trick' => $dto
+            ]);
+        }
+
+
+
+
+
+    }
 
     /**
      * @Route("/upload-photo", name="upload-photo")
@@ -36,9 +65,9 @@ class AddController extends AbstractController
     }
 
     /**
-     * @Route("/add", name="add")
+     * @Route("/add-trick", name="add-trick")
      */
-    public function index(Request $request, EntityManagerInterface $entityManager, TrickRepository $trickRepository): Response
+    public function addTrick(Request $request, EntityManagerInterface $entityManager, TrickRepository $trickRepository): Response
     {
         $dto = new TrickDTO($trickRepository);
         $form = $this->createForm(TrickDTOType::class, $dto);
@@ -91,10 +120,10 @@ class AddController extends AbstractController
             // Supprime la variable de session photos
             $request->getSession()->remove('photos');
 
-            return $this->redirectToRoute('add');
+            return $this->redirectToRoute('add-trick');
         }
 
-        return $this->render('add/index.html.twig', [
+        return $this->render('trick/add-trick.html.twig', [
             'form' => $form->createView()
         ]);
     }

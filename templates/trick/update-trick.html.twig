@@ -68,6 +68,19 @@
                         <span class="label label-primary">{{ trick.Groupe.name }}</span>
                     </p>
                 </div><!-- /.column -->
+
+                    <h5 class="heading-1 mb20">Photos</h5>
+                    <form action="{{ path('upload-photo') }}" class="dropzone">
+                        <div class="fallback">
+                            <input name="file" type="file" multiple />
+                        </div>
+                    </form>
+                    <div class="form-group text-right mt20">
+                        <button type="submit"class="btn btn-lg btn-default">Publier la figure</button>
+                    </div>
+
+                </div><!-- column -->
+
                 <div class="col-xs-12 mt40 text-right">
                     <p class="no-margin">
                         <a href="#" class="btn btn-primary btn-lg">Mettre à jour</a>
@@ -79,3 +92,4 @@
     </section>
     <!-- End Infos-->
 {% endblock %}
+
