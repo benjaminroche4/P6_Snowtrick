@@ -120,7 +120,7 @@ class TrickController extends AbstractController
             // Supprime la variable de session photos
             $request->getSession()->remove('photos');
 
-            return $this->redirectToRoute('add-trick');
+            return $this->redirectToRoute('home');
         }
 
         return $this->render('trick/add-trick.html.twig', [
