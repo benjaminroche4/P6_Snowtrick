@@ -24,12 +24,6 @@
             <div class="row">
                 {{ form_start(form, {"attr": {"class": "mb40-xs"}}) }}
                 <div class="col-lg-10 col-lg-offset-1">
-                    {% for message in app.flashes('Notification') %}
-                        <div class="flash-notice alert alert-success alert-dismissible alert-position mt10 mb20" role="alert">
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span class="ion-ios-close-empty"></span></button>
-                            {{ message }}
-                        </div>
-                    {% endfor %}
                     {{ form_errors(form) }}
                     <div class="row">
                         <div class="col-sm-6">
@@ -73,7 +67,7 @@
                         </div>
                     </form>
                     <div class="form-group text-right mt20">
-                        <button type="submit"class="btn btn-lg btn-default">Publier la figure</button>
+                        <button type="submit" class="btn btn-lg btn-default">Publier la figure</button>
                     </div>
 
                 </div><!-- column -->

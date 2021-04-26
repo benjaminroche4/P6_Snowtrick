@@ -17,7 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class HomeController extends AbstractController
 {
     //Constante = valeur qui ne change pas.
-    const TAILLE_PAGE = 3;
+    const TAILLE_PAGE = 10;
 
     /**
      * @Route("/trick/{id}/delete", name="trick_delete")

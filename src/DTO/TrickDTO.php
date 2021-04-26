@@ -1,7 +1,5 @@
 <?php
 
-
-
 namespace App\DTO;
 use App\Repository\TrickRepository;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -39,7 +37,6 @@ class TrickDTO
             $context->buildViolation('Ce trick est déjà existant.')->addViolation();
         }
     }
-
 
     /**
      * @return mixed

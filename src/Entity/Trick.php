@@ -42,7 +42,7 @@ class Trick
     private $updatedAt;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $mainPhotoUrl;
 
@@ -138,7 +138,7 @@ class Trick
         return $this->mainPhotoUrl;
     }
 
-    public function setMainPhotoUrl(string $mainPhotoUrl): self
+    public function setMainPhotoUrl(?string $mainPhotoUrl): self
     {
         $this->mainPhotoUrl = $mainPhotoUrl;
 

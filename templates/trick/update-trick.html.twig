@@ -1,5 +1,9 @@
 {% extends'base.html.twig' %}
 
+{% block javascripts %}
+    <script type="text/javascript" src="{{ asset('dropzone/min/dropzone.min.js') }}"></script>
+{% endblock %}
+
 {% block title %}{{ trick.title }}{% endblock %}
 
 {% block body %}
@@ -22,15 +26,27 @@
     <section id="infos" class="background1 section-padding">
         <div class="container">
             <div class="row">
+                {% for message in app.flashes('Notification') %}
+                    <div class="row">
+                        <div class="col-lg-10 col-lg-offset-1">
+                            <div class="flash-notice alert alert-success alert-dismissible alert-position mt10 mb20 text-center" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span class="ion-ios-close-empty"></span></button>
+                                <strong>{{ message }}</strong>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
                 <div class="col-xs-12 text-center desktop-section mb20">
                     {% for photo in trick.photos %}
                         <span>
                             <img src="{{ asset('/img/upload/'~photo.url) }}" class="photo-size">
+                            <a href="{{ path('delete-photo', {"trickId":trick.id, "id":photo.id}) }}">delete</a>
                         </span>
                     {% endfor %}
 
                     {% for video in trick.videos %}
                         <iframe width="280" height="158" src="{{ video.Url }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        <a href="{{ path('delete-video', {"trickId":trick.id, "id":video.id}) }}">delete</a>
                     {% endfor %}
                 </div>
                 <div class="col-xs-12 text-center mobile-section mb20">
@@ -57,37 +73,57 @@
                         </div>
                     </div><!-- /panel -->
                 </div>
-                <div class="col-xs-12 text-center">
-                    <textarea rows="5" class="form-control">{{ trick.content }}</textarea>
-                    <span class="text-center section-divider"></span>
-                    <p class="no-margin">
-                        <span class="label label-default">Publié le {{ trick.CreatedAt | date('d/m/Y') }}</span>
-                        {% if trick.updatedAt is not null %}
-                            <span class="label label-warning">Mise à jour le {{ trick.updatedAt | date('d/m/Y') }}</span>
-                        {% endif %}
-                        <span class="label label-primary">{{ trick.Groupe.name }}</span>
-                    </p>
-                </div><!-- /.column -->
+            </div><!-- /.row -->
 
-                    <h5 class="heading-1 mb20">Photos</h5>
-                    <form action="{{ path('upload-photo') }}" class="dropzone">
-                        <div class="fallback">
-                            <input name="file" type="file" multiple />
+            <div class="row">
+                {{ form_start(form, {"attr": {"class": "mb40-xs"}}) }}
+                <div class="col-lg-10 col-lg-offset-1">
+                    {{ form_errors(form) }}
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <h5 class="heading-1 mb20">Nom de la figure</h5>
+                                {{ form_widget(form.title, {"attr": {'class': 'form-control', 'placeholder': 'Ma super figure..'} })}}
+                            </div>
                         </div>
-                    </form>
-                    <div class="form-group text-right mt20">
-                        <button type="submit"class="btn btn-lg btn-default">Publier la figure</button>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <h5 class="heading-1 mb20">Groupe de la figure</h5>
+                                {{ form_widget(form.groupe, {"attr": {'class': 'form-control', 'placeholder': 'Choisissez'} })}}
+                            </div>
+                        </div>
                     </div>
-
-                </div><!-- column -->
+                    <div class="form-group">
+                        <h5 class="heading-1 mb20">Description de la figure</h5>
+                        {{ form_widget(form.content, {"attr": {'class': 'form-control', 'placeholder': 'Decrivez la figure dans les moindres détails..', 'rows': '5'} })}}
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <h5 class="heading-1 mb20">Photo de couverture</h5>
+                                {{ form_widget(form.mainPhotoUrl, {"attr": {'class': 'form-control-file'} })}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <span class="text-center section-divider"></span>
+                        <p class="no-margin text-center">
+                            <span class="label label-default">Publié le {{ trick.CreatedAt | date('d/m/Y') }}</span>
+                            {% if trick.updatedAt is not null %}
+                                <span class="label label-warning">Mise à jour le {{ trick.updatedAt | date('d/m/Y') }}</span>
+                            {% endif %}
+                            <span class="label label-primary">{{ trick.Groupe.name }}</span>
+                        </p>
+                    </div>
+                </div><!-- /.column -->
 
                 <div class="col-xs-12 mt40 text-right">
                     <p class="no-margin">
-                        <a href="#" class="btn btn-primary btn-lg">Mettre à jour</a>
+                        <button type="submit" class="btn btn-primary btn-lg">Mettre à jour</button>
                         <a href="#" class="btn btn-danger btn-md">Supprimer</a>
                     </p>
                 </div><!-- /.column -->
-            </div><!-- /.row -->
+                {{ form_end(form) }}
         </div>
     </section>
     <!-- End Infos-->

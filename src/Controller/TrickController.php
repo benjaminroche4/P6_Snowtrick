@@ -8,6 +8,7 @@ use App\Entity\Trick;
 use App\Entity\Video;
 use App\Form\AddType;
 use App\Form\TrickDTOType;
+use App\Form\TrickType;
 use App\Repository\TrickRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -17,32 +18,51 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class TrickController extends AbstractController
 {
+
+    /**
+     * @Route("/delete-video-{trickId}-{id}", name="delete-video")
+     */
+    public function deletevideo(Video $video, EntityManagerInterface $entityManager, $trickId){
+
+        $entityManager->remove($video);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('update-trick',['id'=>$trickId]);
+    }
+
+    /**
+     * @Route("/delete-photo-{trickId}-{id}", name="delete-photo")
+     */
+    public function deletephoto(Photo $photo, EntityManagerInterface $entityManager, $trickId){
+
+        $entityManager->remove($photo);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('update-trick',['id'=>$trickId]);
+    }
+
     /**
      * @Route("/update-trick-{id}", name="update-trick")
      * @param Trick $trick
      * @return Response
      */
-    public function updateTrick($id, TrickRepository $trickRepository, Request $request): Response{
+    public function updateTrick(Trick $trick, TrickRepository $trickRepository, Request $request, EntityManagerInterface $entityManager): Response{
 
-        $dto = new TrickDTO($trickRepository);
-        $form = $this->createForm(TrickDTOType::class, $dto); //transvase les données de la requête dans le DTO (formbinding)
+        $form = $this->createForm(TrickType::class, $trick); //transvase les données de la requête dans le DTO (formbinding)
         $form->handleRequest($request);
+        if( $form->isSubmitted() && $form->isValid()){
 
-        if( ! $form->isSubmitted() ){  // GET
+            $entityManager->flush();
+            $this->addFlash('Notification', 'La figure a bien été modifié !');
 
-            $trick = $trickRepository->find($id);
-            $dto->setGroupe($trick->getGroupe());
-            $dto->setContent($trick->getContent());
-            $dto->setMainPhotoUrl($trick->getMainPhotoUrl());
-            $dto->setTitle($trick->getTitle());
-
-            return $this->render('trick/update-trick.html.twig', [
-                'trick' => $dto
-            ]);
+            return $this->redirectToRoute('update-trick',['id'=>$trick->getId()]);
         }
 
 
-
+        return $this->render('trick/update-trick.html.twig', [
+            'trick' => $trick,
+            'form'=>$form->createView()
+        ]);
 
 
     }
