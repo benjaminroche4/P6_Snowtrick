@@ -84,12 +84,14 @@ Author:Denis Samardjiev
 img.img-size {
     width: 100%;
     height: 150px !important;
+    object-fit: cover;
 }
 
 .photo-size {
-    width: 280px !important;
+    width: 100% !important;
     height: 158px !important;
     margin-bottom: 4px !important;
+    object-fit: cover;
 }
 
 .comment-date{

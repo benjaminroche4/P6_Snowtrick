@@ -4,6 +4,10 @@
     <script type="text/javascript" src="{{ asset('dropzone/min/dropzone.min.js') }}"></script>
 {% endblock %}
 
+{% block stylesheets %}
+    <link href="{{ asset('dropzone/min/dropzone.min.css') }}" rel="stylesheet">
+{% endblock %}
+
 {% block title %}{{ trick.title }}{% endblock %}
 
 {% block body %}
@@ -26,6 +30,12 @@
     <section id="infos" class="background1 section-padding">
         <div class="container">
             <div class="row">
+                <div class="col-xs-12 section-title text-center">
+                    <h2>Modifier une figure</h2>
+                    <span class="section-divider"></span>
+                </div><!-- /.column -->
+            </div><!-- /.row -->
+            <div class="row">
                 {% for message in app.flashes('Notification') %}
                     <div class="row">
                         <div class="col-lg-10 col-lg-offset-1">
@@ -36,18 +46,23 @@
                         </div>
                     </div>
                 {% endfor %}
+
                 <div class="col-xs-12 text-center desktop-section mb20">
+                    <div class="row">
                     {% for photo in trick.photos %}
-                        <span>
-                            <img src="{{ asset('/img/upload/'~photo.url) }}" class="photo-size">
-                            <a href="{{ path('delete-photo', {"trickId":trick.id, "id":photo.id}) }}">delete</a>
-                        </span>
+                            <div class="col-xs-6 col-sm-3 mb5">
+                                <img src="{{ asset('/img/upload/'~photo.url) }}" class="photo-size">
+                                <a href="{{ path('delete-photo', {"trickId":trick.id, "id":photo.id}) }}" class="text-small"><span class="ml10 pe-7s-trash"></span> Supprimer</a>
+                            </div>
                     {% endfor %}
 
                     {% for video in trick.videos %}
-                        <iframe width="280" height="158" src="{{ video.Url }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                        <a href="{{ path('delete-video', {"trickId":trick.id, "id":video.id}) }}">delete</a>
+                        <div class="col-xs-6 col-sm-3">
+                            <iframe src="{{ video.Url }}" class="photo-size" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            <a href="{{ path('delete-video', {"trickId":trick.id, "id":video.id}) }}" class="text-small"><span class="ml10 pe-7s-trash"></span> Supprimer</a>
+                        </div>
                     {% endfor %}
+                    </div>
                 </div>
                 <div class="col-xs-12 text-center mobile-section mb20">
                     <div class="panel panel-default">
@@ -63,11 +78,13 @@
                                 {% for photo in trick.photos %}
                                     <span>
                                         <img src="{{ asset('/img/upload/'~photo.url) }}" class="photo-size">
+                                        <br><a href="{{ path('delete-photo', {"trickId":trick.id, "id":photo.id}) }}" class="text-small"><span class="ml10 pe-7s-trash"></span> Supprimer</a>
                                     </span>
                                 {% endfor %}
 
                                 {% for video in trick.videos %}
                                     <iframe width="280" height="158" src="{{ video.Url }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                                    <br><a href="{{ path('delete-video', {"trickId":trick.id, "id":video.id}) }}" class="text-small"><span class="ml10 pe-7s-trash"></span> Supprimer</a>
                                 {% endfor %}
                             </div>
                         </div>
@@ -80,7 +97,7 @@
                 <div class="col-lg-10 col-lg-offset-1">
                     {{ form_errors(form) }}
                     <div class="row">
-                        <div class="col-sm-6">
+                        <div class="col-sm-6 ">
                             <div class="form-group">
                                 <h5 class="heading-1 mb20">Nom de la figure</h5>
                                 {{ form_widget(form.title, {"attr": {'class': 'form-control', 'placeholder': 'Ma super figure..'} })}}
@@ -104,7 +121,25 @@
                                 {{ form_widget(form.mainPhotoUrl, {"attr": {'class': 'form-control-file'} })}}
                             </div>
                         </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <h5 class="heading-1 mb20">Vidéos</h5>
+                            </div>
+                        </div>
                     </div>
+                    {{ form_end(form) }}
+                    <h5 class="heading-1 mb20">Photos</h5>
+                    <form action="{{ path('upload-photo-update', {'id': trick.id}) }}" class="dropzone">
+                        <div class="fallback">
+                            <input name="file" type="file" multiple />
+                        </div>
+                    </form>
+                    <div class="col-xs-12 mt40 text-right">
+                        <p class="no-margin">
+                            <button type="submit" class="btn btn-primary btn-lg">Mettre à jour</button>
+                            <a href="{{ path('trick_delete_page', {"id": trick.id}) }}" class="btn btn-danger btn-md">Supprimer</a>
+                        </p>
+                    </div><!-- /.column -->
                     <div class="text-center">
                         <span class="text-center section-divider"></span>
                         <p class="no-margin text-center">
@@ -117,13 +152,7 @@
                     </div>
                 </div><!-- /.column -->
 
-                <div class="col-xs-12 mt40 text-right">
-                    <p class="no-margin">
-                        <button type="submit" class="btn btn-primary btn-lg">Mettre à jour</button>
-                        <a href="#" class="btn btn-danger btn-md">Supprimer</a>
-                    </p>
-                </div><!-- /.column -->
-                {{ form_end(form) }}
+            </div>
         </div>
     </section>
     <!-- End Infos-->

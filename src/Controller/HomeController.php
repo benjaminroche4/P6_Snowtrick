@@ -20,7 +20,7 @@ class HomeController extends AbstractController
     const TAILLE_PAGE = 10;
 
     /**
-     * @Route("/trick/{id}/delete", name="trick_delete")
+     * @Route("/trick/{id}/delete", name="trick_delete_page")
      * @param Trick $trick
      * @return RedirectResponse
      */
@@ -28,6 +28,7 @@ class HomeController extends AbstractController
         $em = $this->getDoctrine()->getManager();
         $em->remove($trick);
         $em->flush();
+        $this->addFlash('Notification', 'La figure a bien été supprimé !');
 
         return $this->redirectToRoute("home");
     }

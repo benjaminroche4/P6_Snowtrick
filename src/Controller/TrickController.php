@@ -12,12 +12,27 @@ use App\Form\TrickType;
 use App\Repository\TrickRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class TrickController extends AbstractController
 {
+
+    /**
+     * @Route("/trick/{id}/delete", name="trick_delete")
+     * @param Trick $trick
+     * @return RedirectResponse
+     */
+    public function deleteTrick(Trick $trick) :RedirectResponse{
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($trick);
+        $em->flush();
+        $this->addFlash('Notification', 'La figure a bien été supprimé !');
+
+        return $this->redirectToRoute("home");
+    }
 
     /**
      * @Route("/delete-video-{trickId}-{id}", name="delete-video")
@@ -48,23 +63,65 @@ class TrickController extends AbstractController
      */
     public function updateTrick(Trick $trick, TrickRepository $trickRepository, Request $request, EntityManagerInterface $entityManager): Response{
 
+        $oldTrickMainPhotoUrl = $trick->getMainPhotoUrl();
         $form = $this->createForm(TrickType::class, $trick); //transvase les données de la requête dans le DTO (formbinding)
         $form->handleRequest($request);
         if( $form->isSubmitted() && $form->isValid()){
 
+            $file = $form['mainPhotoUrl']->getData();
+            if( $file!=null ) {
+                $fileName = uniqid('photo_') . '.jpg';
+                $file->move('img/upload', $fileName);
+                $trick->setMainPhotoUrl($fileName);
+            }else{
+                $trick->setMainPhotoUrl( $oldTrickMainPhotoUrl );
+            }
+
+            $trick->setUpdatedAt(new \DateTime());
+
+            // Persiste les photos upload d'on le nom est en session
+            $photos = $request->getSession()->get('photos', []);
+            foreach($photos as $photo){
+                $p = new Photo();
+                //fait la relation entre les deux tables
+                $p->setTrick($trick);
+                $p->setUrl($photo);
+
+                $entityManager->persist($p);
+            }
+
             $entityManager->flush();
+
+            // Supprime la variable de session photos
+            $request->getSession()->remove('photos');
+
             $this->addFlash('Notification', 'La figure a bien été modifié !');
 
             return $this->redirectToRoute('update-trick',['id'=>$trick->getId()]);
         }
-
 
         return $this->render('trick/update-trick.html.twig', [
             'trick' => $trick,
             'form'=>$form->createView()
         ]);
 
+    }
 
+    /**
+     * @Route("/upload-photo-update/{id}", name="upload-photo-update")
+     */
+    public function uploadPhotoUpdate(Request $request, EntityManagerInterface $entityManager){
+
+        // Partie upload des photos
+        $filename = uniqid().'.jpg';
+        move_uploaded_file($_FILES['file']['tmp_name'], 'img/upload/'.$filename);
+
+        // Ajout du nom de fichier en session
+        $photos = $request->getSession()->get('photos',[]);
+        $photos[]= $filename;
+        $request->getSession()->set('photos', $photos);
+
+        return $this->json('ok');
     }
 
     /**

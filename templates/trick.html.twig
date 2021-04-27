@@ -21,17 +21,23 @@
     <!-- Begin Infos -->
     <section id="infos" class="background1 section-padding">
         <div class="container">
-            <div class="row">
-                <div class="col-xs-12 text-center desktop-section mb20">
+
+            <div class="col-xs-12 text-center desktop-section mb20">
+                <div class="row">
                     {% for photo in trick.photos %}
-                        <span>
+                        <div class="col-sm-3 mb5">
                             <img src="{{ asset('/img/upload/'~photo.url) }}" class="photo-size">
-                        </span>
-                    {% endfor %}<br>
+                        </div>
+                    {% endfor %}
+
                     {% for video in trick.videos %}
-                        <iframe width="280" height="158" src="{{ video.Url }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        <div class="col-sm-3">
+                            <iframe class="photo-size" src="{{ video.Url }}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
                     {% endfor %}
                 </div>
+            </div>
+
                 <div class="col-xs-12 text-center mobile-section mb20">
                     <div class="panel panel-default">
                         <div class="panel-heading">

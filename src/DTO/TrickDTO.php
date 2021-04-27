@@ -28,7 +28,6 @@ class TrickDTO
         $this->trickRepository = $trickRepository;
     }
 
-
     /**
      * @Callback
      */
