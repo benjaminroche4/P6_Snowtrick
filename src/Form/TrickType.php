@@ -18,6 +18,7 @@ class TrickType extends AbstractType
             ->add('content')
             ->add('mainPhotoUrl', FileType::class, ['data_class'=>null, "required"=>false])
             ->add('groupe')
+            ->add('linksVideos', TextareaType::class, ['mapped'=>false, "required"=>false])
         ;
     }
 

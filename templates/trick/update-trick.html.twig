@@ -95,7 +95,7 @@
             <div class="row">
                 {{ form_start(form, {"attr": {"class": "mb40-xs"}}) }}
                 <div class="col-lg-10 col-lg-offset-1">
-                    {{ form_errors(form) }}
+                    {{ form_errors(form) }}uiuuiio
                     <div class="row">
                         <div class="col-sm-6 ">
                             <div class="form-group">
@@ -124,6 +124,7 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <h5 class="heading-1 mb20">Vidéos</h5>
+                                {{ form_widget(form.linksVideos, {"attr": {'class': 'form-control', 'placeholder': 'Séparer les vidéos par une virgule..'} })}}
                             </div>
                         </div>
                     </div>

@@ -90,6 +90,21 @@ class TrickController extends AbstractController
                 $entityManager->persist($p);
             }
 
+            //Persiste les vidéos
+            $strVideo = $form->get('linksVideos')->getData();
+
+            if($strVideo!=null) {
+                $videos = explode(',', $strVideo);
+                foreach ($videos as $video) {
+                    $v = new Video();
+                    //fait la relation entre les deux tables
+                    $v->setTrick($trick);
+                    $v->setUrl($video);
+
+                    $entityManager->persist($v);
+                }
+            }
+
             $entityManager->flush();
 
             // Supprime la variable de session photos
