@@ -100,7 +100,7 @@ class ResetPasswordController extends AbstractController
             $user = $this->resetPasswordHelper->validateTokenAndFetchUser($token);
         } catch (ResetPasswordExceptionInterface $e) {
             $this->addFlash('reset_password_error', sprintf(
-                'There was a problem validating your reset request - %s',
+                'Un problème est survenu - %s',
                 $e->getReason()
             ));
 
@@ -164,7 +164,7 @@ class ResetPasswordController extends AbstractController
         $email = (new TemplatedEmail())
             ->from(new Address('reset@snowtricks.com', 'Mot de passe oublié'))
             ->to($user->getEmail())
-            ->subject('Your password reset request')
+            ->subject('Changer votre mot de passe')
             ->htmlTemplate('reset_password/email.html.twig')
             ->context([
                 'resetToken' => $resetToken,

@@ -54,7 +54,7 @@
                                         <img src="{{ asset('/img/upload/'~photo.url) }}" class="photo-size">
                                     </span>
                                 {% else %}
-                                    <p>Ce trick n'a pas encore de photo, <a href="login">connectez-vous</a> pour en ajouter !</p>
+                                    <p>Ce trick n'a pas encore de photo, <a href="{{ path('login')}}">connectez-vous</a> pour en ajouter !</p>
                                 {% endfor %}
 
                                 {% for video in trick.videos %}

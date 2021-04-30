@@ -1,11 +1,23 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Password Reset Email Sent{% endblock %}
+{% block title %}Mot de pass oublié{% endblock %}
 
 {% block body %}
-    <p>
-        An email has been sent that contains a link that you can click to reset your password.
-        This link will expire in {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.
-    </p>
-    <p>If you don't receive an email please check your spam folder or <a href="{{ path('app_forgot_password_request') }}">try again</a>.</p>
+
+    <!-- Begin Forgot Password -->
+    <div class="jumbotron jumbotron-main" style="background-image:url({{ asset('img/register-background.jpg') }});background-size:cover;">
+        <div class="container center-vertically-holder">
+            <div class="center-vertically">
+                <div class="col-sm-6 col-lg-6 col-sm-offset-3 col-lg-offset-3 mt40-xs">
+                    <div id="register_form" class="register-form mb40-xs">
+                        <h3 class="no-margin-top mb20"><strong>Mail envoyé !</strong></h3>
+                        <span class="text-success text-small">Un email de récupération de mot de passe vous a été envoyé.
+                            <br/>Consultez votre boite mail, le lien expirera dans 1 heure.</span>
+                    </div>
+                </div><!-- /.column -->
+            </div><!-- /.vertical center -->
+        </div><!-- /.container -->
+    </div>
+    <!-- End Forgot Password -->
+
 {% endblock %}
